@@ -1,0 +1,33 @@
+﻿<Properties StartupConfiguration="{E3F0B4F8-F79B-42BB-8BB7-209BBD859838}|Default">
+  <MonoDevelop.Ide.ItemProperties.Tic-Tac-Toe-Game FirstBuild="True" PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Tic-Tac-Toe-Game/ClientApp/src/app/home/home.component.html">
+    <Files>
+      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/home/home.component.html" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Tic-Tac-Toe-Game" expanded="True">
+            <Node name="Tic-Tac-Toe-Game" expanded="True">
+              <Node name="ClientApp" expanded="True">
+                <Node name="src" expanded="True">
+                  <Node name="app" expanded="True">
+                    <Node name="home" expanded="True">
+                      <Node name="home.component.html" selected="True" />
+                    </Node>
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

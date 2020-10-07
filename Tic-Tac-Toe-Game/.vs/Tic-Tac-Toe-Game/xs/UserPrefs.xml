@@ -1,8 +1,10 @@
 ﻿<Properties StartupConfiguration="{E3F0B4F8-F79B-42BB-8BB7-209BBD859838}|Default">
-  <MonoDevelop.Ide.ItemProperties.Tic-Tac-Toe-Game FirstBuild="True" PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.ItemProperties.Tic-Tac-Toe-Game PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Tic-Tac-Toe-Game/ClientApp/src/app/home/home.component.html">
     <Files>
-      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/home/home.component.html" Line="1" Column="1" />
+      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/home/home.component.html" Line="14" Column="20" />
+      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/index.html" Line="1" Column="1" />
+      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/home/home.component.ts" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -10,17 +12,21 @@
           <Node name="Tic-Tac-Toe-Game" expanded="True">
             <Node name="Tic-Tac-Toe-Game" expanded="True">
               <Node name="ClientApp" expanded="True">
+                <Node name="e2e" expanded="True" />
                 <Node name="src" expanded="True">
-                  <Node name="app" expanded="True">
-                    <Node name="home" expanded="True">
-                      <Node name="home.component.html" selected="True" />
-                    </Node>
-                  </Node>
+                  <Node name="app" expanded="True" />
                 </Node>
               </Node>
+              <Node name="Controllers" expanded="True" />
+              <Node name="Pages" expanded="True" />
+              <Node name="Properties" expanded="True" />
+              <Node name="wwwroot" expanded="True" />
             </Node>
           </Node>
         </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

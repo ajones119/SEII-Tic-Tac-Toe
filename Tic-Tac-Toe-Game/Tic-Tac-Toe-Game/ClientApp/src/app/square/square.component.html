@@ -1,0 +1,5 @@
+<div class="text-center row" style="height: 200px; width: 200px">
+    <button nbButton outline fullWidth  *ngIf="!value">{{value}}</button>
+    <button nbButton outline fullWidth hero  status="success" *ngIf="value == 'O'">{{value}}</button>
+    <button nbButton outline fullWidth hero  status="warning" *ngIf="value == 'X'">{{value}}</button>
+</div>

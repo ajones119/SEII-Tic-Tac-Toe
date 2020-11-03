@@ -1,3 +1,14 @@
-<h1 class="text-center">Tic tac toe game!</h1>
-
-<app-game-board></app-game-board>
+<div class="container ">
+    <div class="row justify-content-center">
+        <h1>Tic tac toe game!</h1>
+    </div>
+    <div class="row justify-content-center">
+        <p>What kind of game would you like to play?</p>
+    </div>
+    <div class="row justify-content-center">
+        <button nbButton hero status="primary" [routerLink]="['/LocalMultiplayer']">Local Multiplayer</button>
+    </div>
+    <div class="row justify-content-center">
+        <button nbButton hero status="success" [routerLink]="['/SinglePlayerVsAI']">Single Player VS. AI</button>
+    </div>
+</div>

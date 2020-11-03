@@ -8,14 +8,21 @@ import { IGameBoard, ITileSpace } from '../igame-board';
 })
 export class GameBoardComponent implements OnInit {
 
+  @Input() GameType: String;
+
   squares: any[];
   xIsNext: boolean;
   winner: string;
+
+  xWins: number;
+  oWins: number;
 
   constructor() { }
 
   ngOnInit() {
     this.newGame();
+    this.xWins = 0;
+    this.oWins = 0;
     
   }
 
@@ -24,6 +31,7 @@ export class GameBoardComponent implements OnInit {
     this.squares = Array(9).fill(null);
     this.winner = null;
     this.xIsNext = true;
+
     console.log("newGame init end");
   }
 
@@ -41,6 +49,12 @@ export class GameBoardComponent implements OnInit {
       }
 
       this.winner = this.calculateWinner();
+      if (this.winner == 'X') {
+        this.xWins++;
+      }
+      else if (this.winner == 'O') {
+        this.oWins++;
+      }
       console.log("MakeMove End");
     }
   }

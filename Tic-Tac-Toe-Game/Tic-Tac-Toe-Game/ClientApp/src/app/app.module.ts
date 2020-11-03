@@ -14,6 +14,8 @@ import { SquareComponent } from './square/square.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbThemeModule, NbLayoutModule, NbButtonModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { LocalMultiplayerComponent } from './local-multiplayer/local-multiplayer.component';
+import { SinglePlayerVsAIComponent } from './single-player-vs-ai/single-player-vs-ai.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     FetchDataComponent,
     GameBoardComponent,
     SquareComponent,
+    LocalMultiplayerComponent,
+    SinglePlayerVsAIComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -31,7 +35,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'Game', component: GameBoardComponent, pathMatch: 'full'},
+      { path: 'LocalMultiplayer', component: LocalMultiplayerComponent, pathMatch: 'full' },
+      { path: 'SinglePlayerVsAI', component: SinglePlayerVsAIComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),

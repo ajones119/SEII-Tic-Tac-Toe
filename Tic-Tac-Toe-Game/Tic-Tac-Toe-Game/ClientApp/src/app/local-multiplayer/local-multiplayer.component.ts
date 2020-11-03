@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LocalMultiplayerComponent implements OnInit {
 
+  GameType: string;
+
   constructor() { }
 
   ngOnInit() {
+    this.GameType = 'Local';
   }
 
 }

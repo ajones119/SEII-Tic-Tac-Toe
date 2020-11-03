@@ -8,11 +8,12 @@ import { IGameBoard, ITileSpace } from '../igame-board';
 })
 export class GameBoardComponent implements OnInit {
 
-  @Input() GameType: String;
+  @Input() GameType: string;
 
   squares: any[];
   xIsNext: boolean;
   winner: string;
+  isTie: boolean;
 
   xWins: number;
   oWins: number;
@@ -23,6 +24,7 @@ export class GameBoardComponent implements OnInit {
     this.newGame();
     this.xWins = 0;
     this.oWins = 0;
+    this.isTie = false;
     
   }
 
@@ -36,8 +38,8 @@ export class GameBoardComponent implements OnInit {
   }
 
   get player() {
+      return this.xIsNext ? 'X' : 'O';
     
-    return this.xIsNext ? 'X' : 'O';
   }
 
   makeMove(idx: number) {
@@ -57,7 +59,63 @@ export class GameBoardComponent implements OnInit {
       }
       console.log("MakeMove End");
     }
+
+    this.isTie = this.checkForTie();
+    if (this.GameType == 'PlayerVsAI' && !this.winner && !this.isTie) {
+      console.log("AI Start");
+        var canMove: boolean = false;
+        while (canMove == false) {
+          canMove = this.makeAIMove();
+        }
+
+
+        this.xIsNext = !this.xIsNext;
+        this.winner = this.calculateWinner();
+        if (this.winner == 'X') {
+          this.xWins++;
+        }
+        else if (this.winner == 'O') {
+          this.oWins++;
+        }
+        console.log("Make AI Move End");
+
+    }
+    this.isTie = this.checkForTie();
+    console.log("Make Move End");
   }
+
+
+
+
+  makeAIMove() {
+    console.log("MakeAIMove start");
+    var index: number = Math.floor(Math.random() * (8 - 0 + 1)) + 0;
+    console.log("AI Check Square " + index);
+    if (!this.squares[index]) {
+      this.squares.splice(index, 1, this.player);
+      return true;
+    }
+    else
+      return false;
+
+
+  }
+
+
+  makeRandomAIMove() {
+    console.log("MakeRandomAIMove start");
+    var index: number = Math.floor(Math.random() * (8 - 0 + 1)) + 0;
+    console.log("AI Check Square " + index);
+    if (!this.squares[index]) {
+      this.squares.splice(index, 1, this.player);
+      return true;
+    }
+    else
+      return false;
+
+
+  }
+
 
   calculateWinner() {
     const lines = [
@@ -81,6 +139,20 @@ export class GameBoardComponent implements OnInit {
       }
     }
     return null;
+  }
+
+  checkForTie() {
+    console.log("Check for tie start");
+    if (!this.winner) {
+      for (var index: number = 0; index < 9; index++) {
+        if (!this.squares[index]) {
+          return false;
+          console.log("Found Tie");
+        }
+      }
+      console.log("No tie found");
+      return true;
+    }
   }
 
 }

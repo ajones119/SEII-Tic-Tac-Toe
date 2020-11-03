@@ -1,7 +1,8 @@
-<h1 *ngIf="!winner" class="text-center">Current Player: {{ player }}</h1>
+<h1 *ngIf="!winner && !isTie" class="text-center">Current Player: {{ player }}</h1>
 <h1 *ngIf="winner" class="text-center">
     Player {{ winner }} wins!
 </h1>
+<h1 *ngIf="isTie" class="text-center">Game Tied!</h1>
 <div class="text-center">
     <button nbButton outline status="danger" (click)="newGame()">Start a new game</button>
 </div>

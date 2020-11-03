@@ -12,7 +12,7 @@ export class SinglePlayerVsAIComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.GameType= 'Local';
+    this.GameType= 'PlayerVsAI';
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-local-multiplayer',
@@ -8,11 +9,14 @@ import { Component, OnInit } from '@angular/core';
 export class LocalMultiplayerComponent implements OnInit {
 
   GameType: string;
+  BoardSize: number;
 
-  constructor() { }
+  constructor(private _Activatedroute: ActivatedRoute) { }
 
   ngOnInit() {
     this.GameType = 'Local';
+    this.BoardSize = this._Activatedroute.snapshot.paramMap.get("BoardSize");
+
   }
 
 }

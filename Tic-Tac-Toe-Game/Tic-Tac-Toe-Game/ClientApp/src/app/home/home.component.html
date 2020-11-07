@@ -5,13 +5,28 @@
     <div class="row justify-content-center">
         <p>What kind of game would you like to play?</p>
     </div>
-    <div class="row justify-content-center">
-        <button nbButton hero status="primary" [routerLink]="['/LocalMultiplayer']">Local Multiplayer</button>
+    <div class="row">
+        <div class="col justify-content-center">
+            <button nbButton hero status="primary" [routerLink]="['/LocalMultiplayer', 3]">3x3 Local Multiplayer</button>
+        </div>
+        <div class="col justify-content-center">
+            <button nbButton hero status="primary" [routerLink]="['/LocalMultiplayer', 4]">4x4 Local Multiplayer</button>
+        </div>
     </div>
-    <div class="row justify-content-center">
-        <button nbButton hero status="success" [routerLink]="['/SinglePlayerVsAI']">Single Player VS. AI</button>
+    <div class="row">
+        <div class="col justify-content-center">
+            <button nbButton hero status="success" [routerLink]="['/SinglePlayerVsAI', 3]">3x3 Single Player VS. AI</button>
+        </div>
+        <div class="col justify-content-center">
+            <button nbButton hero status="success" [routerLink]="['/SinglePlayerVsAI', 4]">4x4 Single Player VS. AI</button>
+        </div>
     </div>
-    <div class="row justify-content-center">
-        <button nbButton hero status="primary" [routerLink]="['/AIvsAI']">AIvsAI</button>
+    <div class="row">
+        <div class="col justify-content-center">
+            <button nbButton hero status="primary" [routerLink]="['/AIvsAI', 3]">3x3 AIvsAI</button>
+        </div>
+        <div class="col justify-content-center">
+            <button nbButton hero status="primary" [routerLink]="['/AIvsAI', 4]">4x4 AIvsAI</button>
+        </div>
     </div>
 </div>

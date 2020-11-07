@@ -13,13 +13,22 @@
 
 <div class="row justify-content-center">
 
-    <main>
+    <main class="threeByThree" *ngIf="is3x3">
         <app-square *ngFor="let val of board; let i = index"
                     [value]="val"
                     (click)="makeMove(i)">
 
         </app-square>
     </main>
+
+    <main class="fourByFour" *ngIf="is4x4">
+        <app-square *ngFor="let val of board; let i = index"
+                    [value]="val"
+                    (click)="makeMove(i)">
+
+        </app-square>
+    </main>
+
 </div>
 <div class="row justify-content-center">
     <p>Number of X Wins: {{xWins}}</p>
@@ -29,4 +38,5 @@
 </div>
 
 <p>GameType: {{GameType}}</p>
+<p>BoardSize: {{BoardSize}}</p>
 

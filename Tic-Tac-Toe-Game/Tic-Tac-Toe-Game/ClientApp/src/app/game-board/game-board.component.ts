@@ -10,15 +10,23 @@ import { cloneDeep } from 'lodash';
 export class GameBoardComponent implements OnInit {
 
   @Input() GameType: string;
+  @Input() BoardSize: number;
+
 
   board: string[] = [];
   player1: string;
   player2: string;
-  xIsNext: boolean;
   winner: string;
+  xIsNext: boolean;
   isTie: boolean;
   isGameOver = true;
+
+  is3x3: boolean;
+  is4x4: boolean;
   isAIvsAI: boolean = false;
+
+
+
 
   xWins: number;
   oWins: number;
@@ -26,6 +34,17 @@ export class GameBoardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+    if (this.BoardSize == 3) {
+      this.is3x3 = true;
+      this.is4x4 = false;
+    }
+    else if (this.BoardSize == 4) {
+      this.is4x4 = true;
+      this.is3x3 = false;
+    }
+
+
     this.newGame();
     this.xWins = 0;
     this.oWins = 0;
@@ -37,8 +56,7 @@ export class GameBoardComponent implements OnInit {
     if (this.GameType == "AIvsAI") {
       this.isAIvsAI = true;
     }
-
-    
+  
   }
 
 
@@ -46,7 +64,15 @@ export class GameBoardComponent implements OnInit {
 
   newGame() {
     console.log("newGame init begin");
-    this.board = Array(9).fill(null);
+    if (this.BoardSize == 3) {
+      this.board = Array(9).fill(null);
+    }
+
+    else if (this.BoardSize == 4) {
+      this.board = Array(16).fill(null);
+
+    }
+
     this.winner = null;
     this.xIsNext = true;
     this.isGameOver = false;

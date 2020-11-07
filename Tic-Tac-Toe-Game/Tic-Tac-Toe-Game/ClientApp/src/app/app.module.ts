@@ -37,9 +37,9 @@ import { AIVsAIComponent } from './ai-vs-ai/ai-vs-ai.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'LocalMultiplayer', component: LocalMultiplayerComponent, pathMatch: 'full' },
-      { path: 'SinglePlayerVsAI', component: SinglePlayerVsAIComponent, pathMatch: 'full' },
-      { path: 'AIvsAI', component: AIVsAIComponent, pathMatch: 'full' },
+      { path: 'LocalMultiplayer/:BoardSize', component: LocalMultiplayerComponent, pathMatch: 'full' },
+      { path: 'SinglePlayerVsAI/:BoardSize', component: SinglePlayerVsAIComponent, pathMatch: 'full' },
+      { path: 'AIvsAI/:BoardSize', component: AIVsAIComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),

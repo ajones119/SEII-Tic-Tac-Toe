@@ -1,7 +1,13 @@
-main {
+.threeByThree {
     display: grid;
     grid-template-columns: 200px 200px 200px;
     grid-gap: 0px;
+}
+
+.fourByFour {
+  display: grid;
+  grid-template-columns: 200px 200px 200px 200px;
+  grid-gap: 0px;
 }
 
 app-square {

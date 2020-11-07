@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-ai-vs-ai',
@@ -8,10 +9,13 @@ import { Component, OnInit } from '@angular/core';
 export class AIVsAIComponent implements OnInit {
 
   GameType: string;
+  BoardSize: number;
 
-  constructor() { }
+  constructor(private _Activatedroute: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.GameType = 'AIvsAI';
+    this.BoardSize = this._Activatedroute.snapshot.paramMap.get("BoardSize");
   }
 }

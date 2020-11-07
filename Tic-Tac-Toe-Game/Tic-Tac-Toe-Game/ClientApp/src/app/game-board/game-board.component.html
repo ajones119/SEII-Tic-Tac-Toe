@@ -1,10 +1,14 @@
+<div class="text-center" *ngIf="isAIvsAI">
+    <button nbButton outline status="success" (click)="startAIvsAI()">Start AI vs AI game</button>
+</div>
+
 <h1 *ngIf="!winner && !isTie" class="text-center">Current Player: {{ player }}</h1>
 <h1 *ngIf="winner && !isTie" class="text-center">
     Player {{ winner.winner }} wins!
 </h1>
 <h1 *ngIf="isTie" class="text-center">Game Tied!</h1>
 <div class="text-center">
-    <button nbButton outline status="danger" (click)="newGame()">Start a new game</button>
+    <button nbButton outline status="danger" (click)="newGame()" *ngIf="!isAIvsAI">Start a new game</button>
 </div>
 
 <div class="row justify-content-center">

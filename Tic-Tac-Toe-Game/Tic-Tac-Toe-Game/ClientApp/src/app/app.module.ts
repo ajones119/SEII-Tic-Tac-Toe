@@ -16,6 +16,7 @@ import { NbThemeModule, NbLayoutModule, NbButtonModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { LocalMultiplayerComponent } from './local-multiplayer/local-multiplayer.component';
 import { SinglePlayerVsAIComponent } from './single-player-vs-ai/single-player-vs-ai.component';
+import { AIVsAIComponent } from './ai-vs-ai/ai-vs-ai.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SinglePlayerVsAIComponent } from './single-player-vs-ai/single-player-v
     SquareComponent,
     LocalMultiplayerComponent,
     SinglePlayerVsAIComponent,
+    AIVsAIComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,6 +39,7 @@ import { SinglePlayerVsAIComponent } from './single-player-vs-ai/single-player-v
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'LocalMultiplayer', component: LocalMultiplayerComponent, pathMatch: 'full' },
       { path: 'SinglePlayerVsAI', component: SinglePlayerVsAIComponent, pathMatch: 'full' },
+      { path: 'AIvsAI', component: AIVsAIComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),

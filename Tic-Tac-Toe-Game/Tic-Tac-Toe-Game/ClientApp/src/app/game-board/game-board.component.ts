@@ -12,12 +12,13 @@ export class GameBoardComponent implements OnInit {
   @Input() GameType: string;
 
   board: string[] = [];
-  humanPlayer: string;
-  aiPlayer: string;
+  player1: string;
+  player2: string;
   xIsNext: boolean;
   winner: string;
   isTie: boolean;
   isGameOver = true;
+  isAIvsAI: boolean = false;
 
   xWins: number;
   oWins: number;
@@ -29,12 +30,19 @@ export class GameBoardComponent implements OnInit {
     this.xWins = 0;
     this.oWins = 0;
     this.isTie = false;
-    this.aiPlayer = 'O';
-    this.humanPlayer = 'X';
+    this.player2 = 'O';
+    this.player1 = 'X';
     this.isGameOver = false;
+    this.winner = null;
+    if (this.GameType == "AIvsAI") {
+      this.isAIvsAI = true;
+    }
 
     
   }
+
+
+
 
   newGame() {
     console.log("newGame init begin");
@@ -64,7 +72,17 @@ export class GameBoardComponent implements OnInit {
 
   }
 
+  startAIvsAI() {
+    this.newGame();
+    this.makeRandomAIMove(this.player1);
+    while (!this.checkWin(this.board)) {
+      this.winner = this.checkWin(this.board);
+      this.onMoveAi(this.player2, this.player1);
+      this.winner = this.checkWin(this.board);
+      this.onMoveAi(this.player1, this.player2);
+    }
 
+  }
 
 
   makeLocalMove(index) {
@@ -86,13 +104,14 @@ export class GameBoardComponent implements OnInit {
     }
   }
 
- /*
-  makeRandomAIMove() {
+ 
+  makeRandomAIMove(AIplayer: string) {
     console.log("MakeRandomAIMove start");
     var index: number = Math.floor(Math.random() * (8 - 0 + 1)) + 0;
     console.log("AI Check Square " + index);
-    if (!this.squares[index]) {
-      this.squares.splice(index, 1, this.player);
+    if (!this.board[index]) {
+      console.log("finish Check = space available");
+      this.board[index] = AIplayer;
       return true;
     }
     else
@@ -102,14 +121,14 @@ export class GameBoardComponent implements OnInit {
   }
 
 
- */
+ 
 
   onMoveWithAI(index: number) {
     if (this.isGameOver) {
       return;
     }
     if (this.board[index] === null) {
-      this.board[index] = this.humanPlayer;
+      this.board[index] = this.player1;
       const winner = this.checkWin(this.board);
       if (winner) {
         this.writeWinner(winner);
@@ -119,14 +138,14 @@ export class GameBoardComponent implements OnInit {
         else
           this.oWins++;
       } else {
-        this.onMoveAi();
+        this.onMoveAi(this.player1, this.player2);
       }
     }
   }
 
-  private onMoveAi() {
-    const index = this.minMax(this.board, 0, this.aiPlayer);
-    this.board[index] = this.aiPlayer;
+  private onMoveAi(player1, player2) {
+    const index = this.minMax(this.board, 0, player2);
+    this.board[index] = player2;
     const winner = this.checkWin(this.board);
     if (winner) {
       
@@ -142,9 +161,9 @@ export class GameBoardComponent implements OnInit {
   minMax(board: string[], depth: number, player: string) {
     const result = this.checkWin(board);
     if (result) {
-      if (result.winner === this.humanPlayer) {
+      if (result.winner === this.player1) {
         return -100 + depth;
-      } else if (result.winner === this.aiPlayer) {
+      } else if (result.winner === this.player2) {
         return 100 - depth;
       } else if (result.winner === 'draw') {
         return 0;
@@ -159,7 +178,7 @@ export class GameBoardComponent implements OnInit {
         const score = this.minMax(
           newBoard,
           depth + 1,
-          player === this.humanPlayer ? this.aiPlayer : this.humanPlayer
+          player === this.player1 ? this.player2 : this.player1
         );
         moves.push({
           index: i,
@@ -169,7 +188,7 @@ export class GameBoardComponent implements OnInit {
     });
 
     const minOrMax =
-      player === this.humanPlayer
+      player === this.player1
         ? Math.min(...moves.map(x => x.score))
         : Math.max(...moves.map(x => x.score));
 
@@ -221,9 +240,9 @@ export class GameBoardComponent implements OnInit {
     if (winner.winner === 'draw') {
       this.isTie = true;
       this.winner.text = 'It is a draw!';
-    } else if (winner.winner === this.aiPlayer) {
+    } else if (winner.winner === this.player2) {
       this.winner.text = 'You lost!';
-    } else if (winner.winner === this.humanPlayer) {
+    } else if (winner.winner === this.player1) {
       // impossible :)
       this.winner.text = 'You won!';
     }

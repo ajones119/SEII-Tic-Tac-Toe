@@ -1,43 +1,13 @@
 ﻿<Properties StartupConfiguration="{E3F0B4F8-F79B-42BB-8BB7-209BBD859838}|Default">
   <MonoDevelop.Ide.ItemProperties.Tic-Tac-Toe-Game PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Tic-Tac-Toe-Game/ClientApp/src/app/game-board/game-board.component.html">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Tic-Tac-Toe-Game/ClientApp/src/app/game-board/game-board.component.ts">
     <Files>
       <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/square/square.component.html" Line="1" Column="1" />
-      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/game-board/game-board.component.html" Line="5" Column="49" />
-      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/game-board/game-board.component.ts" Line="54" Column="39" />
+      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/game-board/game-board.component.html" />
+      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/game-board/game-board.component.ts" Line="64" Column="69" />
       <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/square/square.component.ts" />
-      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/local-multiplayer/local-multiplayer.component.html" Line="1" Column="42" />
+      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/local-multiplayer/local-multiplayer.component.html" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="Tic-Tac-Toe-Game" expanded="True">
-            <Node name="Tic-Tac-Toe-Game" expanded="True">
-              <Node name="ClientApp" expanded="True">
-                <Node name="src" expanded="True">
-                  <Node name="app" expanded="True">
-                    <Node name="game-board" expanded="True" />
-                    <Node name="home" expanded="True" />
-                    <Node name="local-multiplayer" expanded="True">
-                      <Node name="local-multiplayer.component.html" selected="True" />
-                    </Node>
-                    <Node name="single-player-vs-ai" expanded="True" />
-                    <Node name="square" expanded="True" />
-                  </Node>
-                </Node>
-              </Node>
-              <Node name="Controllers" expanded="True" />
-              <Node name="Pages" expanded="True" />
-              <Node name="Properties" expanded="True" />
-              <Node name="wwwroot" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

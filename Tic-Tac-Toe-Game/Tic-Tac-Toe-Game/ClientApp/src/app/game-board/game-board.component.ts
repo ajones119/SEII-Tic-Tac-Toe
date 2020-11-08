@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IGameBoard, ITileSpace } from '../igame-board';
 import { cloneDeep } from 'lodash';
+import { timer } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game-board',
@@ -24,6 +26,8 @@ export class GameBoardComponent implements OnInit {
   is3x3: boolean;
   is4x4: boolean;
   isAIvsAI: boolean = false;
+
+  delayTime: number = 2000;//timer delay in milliseconds
 
 
 
@@ -101,14 +105,32 @@ export class GameBoardComponent implements OnInit {
 
   }
 
-  startAIvsAI() {
+  private delay(ms: number) { //pass a time in milliseconds to this function
+
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
+
+  private async startAIvsAI() {
+    
     this.newGame();
-    this.makeRandomAIMove();
+    this.makeLocalMove(this.makeRandomAIMove(this.board));
     while (!this.checkWin(this.board)) {
+
+
       this.winner = this.checkWin(this.board);
-      this.onMoveAi(this.player2, this.player1);
-      this.winner = this.checkWin(this.board);
-      this.onMoveAi(this.player1, this.player2);
+      if (!this.winner) {
+        await this.delay(this.delayTime);
+          this.onMoveAi(this.player1, this.player2);
+        }
+
+        this.winner = this.checkWin(this.board);
+      if (!this.winner) {
+        await this.delay(this.delayTime);
+           this.onMoveAi(this.player2, this.player1);
+
+        }
+      
     }
 
   }
@@ -125,8 +147,9 @@ export class GameBoardComponent implements OnInit {
         if (winner.winner == 'X')
           this.xWins++;
 
-        else
+        else if (winner.winner == 'O')
           this.oWins++;
+
         this.writeWinner(winner);
       }
       this.xIsNext = !this.xIsNext;
@@ -135,7 +158,7 @@ export class GameBoardComponent implements OnInit {
 
  
   makeRandomAIMove(board: string[]) {
-    console.log("MakeRandomAIMove start");
+    //console.log("MakeRandomAIMove start");
     var pass = false;
     if (!this.checkWin(this.board)) {
       while (pass == false) {
@@ -146,9 +169,9 @@ export class GameBoardComponent implements OnInit {
           var index: number = Math.floor(Math.random() * (15 - 0 + 1)) + 0;
 
         }
-        console.log("AI Check Square " + index);
+        //console.log("AI Check Square " + index);
         if (!board[index]) {
-          console.log("finish Check = space available");
+          //console.log("finish Check = space available");
           return index;
           pass = true;
         }
@@ -191,15 +214,15 @@ export class GameBoardComponent implements OnInit {
       if (winner.winner == 'X')
         this.xWins++;
 
-      else
+      else if(winner.winner == 'O')
         this.oWins++;
+
     }
   }
 
   minMax(board: string[], depth: number, player: string) {
 
-    if (depth < 3) {
-      console.log("DEPTH" + depth);
+    if ((depth <= 3 && depth >= -3) || this.BoardSize == 3) {
       const result = this.checkWin(board);
       if (result) {
         if (result.winner === this.player1) {

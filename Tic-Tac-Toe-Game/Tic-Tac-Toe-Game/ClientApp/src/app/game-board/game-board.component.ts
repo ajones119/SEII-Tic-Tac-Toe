@@ -94,13 +94,16 @@ export class GameBoardComponent implements OnInit {
     }
     else if (this.GameType == 'PlayerVsAI') {
       this.onMoveWithAI(idx)
+
+      //this.makeLocalMove(idx);
+      //this.makeRandomAIMove();
     }
 
   }
 
   startAIvsAI() {
     this.newGame();
-    this.makeRandomAIMove(this.player1);
+    this.makeRandomAIMove();
     while (!this.checkWin(this.board)) {
       this.winner = this.checkWin(this.board);
       this.onMoveAi(this.player2, this.player1);
@@ -131,26 +134,28 @@ export class GameBoardComponent implements OnInit {
   }
 
  
-  makeRandomAIMove(AIplayer: string) {
+  makeRandomAIMove(board: string[]) {
     console.log("MakeRandomAIMove start");
+    var pass = false;
+    if (!this.checkWin(this.board)) {
+      while (pass == false) {
+        if (this.BoardSize == 3) {
+          var index: number = Math.floor(Math.random() * (8 - 0 + 1)) + 0;
+        }
+        else if (this.BoardSize == 4) {
+          var index: number = Math.floor(Math.random() * (15 - 0 + 1)) + 0;
 
-    if (this.BoardSize == 3) {
-      var index: number = Math.floor(Math.random() * (8 - 0 + 1)) + 0;
+        }
+        console.log("AI Check Square " + index);
+        if (!board[index]) {
+          console.log("finish Check = space available");
+          return index;
+          pass = true;
+        }
+      }
+      
+
     }
-    else if (this.BoardSize == 4) {
-      var index: number = Math.floor(Math.random() * ( - 0 + 1)) + 0;
-
-    }
-    console.log("AI Check Square " + index);
-    if (!this.board[index]) {
-      console.log("finish Check = space available");
-      this.board[index] = AIplayer;
-      return true;
-    }
-    else
-      return false;
-
-
   }
 
 
@@ -192,44 +197,54 @@ export class GameBoardComponent implements OnInit {
   }
 
   minMax(board: string[], depth: number, player: string) {
-    const result = this.checkWin(board);
-    if (result) {
-      if (result.winner === this.player1) {
-        return -100 + depth;
-      } else if (result.winner === this.player2) {
-        return 100 - depth;
-      } else if (result.winner === 'draw') {
-        return 0;
+
+    if (depth < 3) {
+      console.log("DEPTH" + depth);
+      const result = this.checkWin(board);
+      if (result) {
+        if (result.winner === this.player1) {
+          return -100 + depth;
+        } else if (result.winner === this.player2) {
+          return 100 - depth;
+        } else if (result.winner === 'draw') {
+          return 0;
+        }
+      }
+
+      const moves = [];
+      board.forEach((v, i) => {
+        if (v === null) {
+          const newBoard = [...board];
+          newBoard[i] = player;
+          const score = this.minMax(
+            newBoard,
+            depth + 1,
+            player === this.player1 ? this.player2 : this.player1
+          );
+          moves.push({
+            index: i,
+            score: score,
+          });
+        }
+      });
+
+
+
+      const minOrMax =
+        player === this.player1
+          ? Math.min(...moves.map(x => x.score))
+          : Math.max(...moves.map(x => x.score));
+
+      const move = moves.find(x => x.score === minOrMax);
+      if (depth === 0) {
+        return move.index;
+      } else {
+        return move.score;
       }
     }
+    else {
 
-    const moves = [];
-    board.forEach((v, i) => {
-      if (v === null) {
-        const newBoard = [...board];
-        newBoard[i] = player;
-        const score = this.minMax(
-          newBoard,
-          depth + 1,
-          player === this.player1 ? this.player2 : this.player1
-        );
-        moves.push({
-          index: i,
-          score: score,
-        });
-      }
-    });
-
-    const minOrMax =
-      player === this.player1
-        ? Math.min(...moves.map(x => x.score))
-        : Math.max(...moves.map(x => x.score));
-
-    const move = moves.find(x => x.score === minOrMax);
-    if (depth === 0) {
-      return move.index;
-    } else {
-      return move.score;
+      return this.makeRandomAIMove(board);
     }
   }
 

@@ -1,8 +1,9 @@
 ﻿<Properties StartupConfiguration="{E3F0B4F8-F79B-42BB-8BB7-209BBD859838}|Default">
   <MonoDevelop.Ide.ItemProperties.Tic-Tac-Toe-Game PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Tic-Tac-Toe-Game/ClientApp/src/app/home/home.component.html">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Tic-Tac-Toe-Game/ClientApp/src/app/game-board/game-board.component.ts">
     <Files>
-      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/home/home.component.html" Line="15" Column="75" />
+      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/home/home.component.html" Line="20" Column="24" />
+      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/game-board/game-board.component.ts" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,11 +14,11 @@
                 <Node name="src" expanded="True">
                   <Node name="app" expanded="True">
                     <Node name="ai-vs-ai" expanded="True" />
-                    <Node name="game-board" expanded="True" />
-                    <Node name="home" expanded="True" />
-                    <Node name="local-multiplayer" expanded="True">
-                      <Node name="local-multiplayer.component.html" selected="True" />
+                    <Node name="game-board" expanded="True">
+                      <Node name="game-board.component.ts" selected="True" />
                     </Node>
+                    <Node name="home" expanded="True" />
+                    <Node name="local-multiplayer" expanded="True" />
                     <Node name="single-player-vs-ai" expanded="True" />
                     <Node name="square" expanded="True" />
                   </Node>

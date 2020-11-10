@@ -3,6 +3,7 @@ import { IGameBoard, ITileSpace } from '../igame-board';
 import { cloneDeep } from 'lodash';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { Winner } from '../i-winner';
 
 @Component({
   selector: 'app-game-board',
@@ -12,7 +13,7 @@ import { take } from 'rxjs/operators';
 export class GameBoardComponent implements OnInit {
 
   @Input() GameType: string;
-  @Input() BoardSize: number;
+  @Input() BoardSize: string;
 
 
   board: string[] = [];
@@ -39,11 +40,11 @@ export class GameBoardComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this.BoardSize == 3) {
+    if (this.BoardSize == '3') {
       this.is3x3 = true;
       this.is4x4 = false;
     }
-    else if (this.BoardSize == 4) {
+    else if (this.BoardSize == '4') {
       this.is4x4 = true;
       this.is3x3 = false;
     }
@@ -68,11 +69,11 @@ export class GameBoardComponent implements OnInit {
 
   newGame() {
     console.log("newGame init begin");
-    if (this.BoardSize == 3) {
+    if (this.BoardSize == '3') {
       this.board = Array(9).fill(null);
     }
 
-    else if (this.BoardSize == 4) {
+    else if (this.BoardSize == '4') {
       this.board = Array(16).fill(null);
 
     }
@@ -103,6 +104,11 @@ export class GameBoardComponent implements OnInit {
       //this.makeRandomAIMove();
     }
 
+    const winner = this.checkWin(this.board);
+    if (winner) {
+      this.writeWinner(winner);
+    }
+
   }
 
   private delay(ms: number) { //pass a time in milliseconds to this function
@@ -114,23 +120,36 @@ export class GameBoardComponent implements OnInit {
   private async startAIvsAI() {
     
     this.newGame();
+    var winner: string;
     this.makeLocalMove(this.makeRandomAIMove(this.board));
     while (!this.checkWin(this.board)) {
+      const winnerCheck = this.checkWin(this.board);
+      if (winnerCheck) {
+        this.writeWinner(winnerCheck);
+      }
 
-
-      this.winner = this.checkWin(this.board);
-      if (!this.winner) {
+     // winner = this.checkWin(this.board);
+      
         await this.delay(this.delayTime);
           this.onMoveAi(this.player1, this.player2);
-        }
+        
 
-        this.winner = this.checkWin(this.board);
-      if (!this.winner) {
+      //winner = this.checkWin(this.board);
+
+      if (!this.checkWin(this.board)) {
         await this.delay(this.delayTime);
            this.onMoveAi(this.player2, this.player1);
 
         }
       
+    }
+    winner = this.checkWin(this.board);
+    console.log("WINNER: " + winner);
+    if (winner != 'draw') {
+      this.winner = winner;
+    }
+    else if (winner == 'draw') {
+      this.isTie = true;
     }
 
   }
@@ -144,10 +163,10 @@ export class GameBoardComponent implements OnInit {
       this.board[index] = this.player;
       const winner = this.checkWin(this.board);
       if (winner) {
-        if (winner.winner == 'X')
+        if (winner == 'X')
           this.xWins++;
 
-        else if (winner.winner == 'O')
+        else if (winner == 'O')
           this.oWins++;
 
         this.writeWinner(winner);
@@ -162,10 +181,10 @@ export class GameBoardComponent implements OnInit {
     var pass = false;
     if (!this.checkWin(this.board)) {
       while (pass == false) {
-        if (this.BoardSize == 3) {
+        if (this.BoardSize == '3') {
           var index: number = Math.floor(Math.random() * (8 - 0 + 1)) + 0;
         }
-        else if (this.BoardSize == 4) {
+        else if (this.BoardSize == '4') {
           var index: number = Math.floor(Math.random() * (15 - 0 + 1)) + 0;
 
         }
@@ -185,51 +204,56 @@ export class GameBoardComponent implements OnInit {
  
 
   onMoveWithAI(index: number) {
+
+    const winner = this.checkWin(this.board);
+    if (winner) {
+      this.writeWinner(winner);
+    }
     if (this.isGameOver) {
       return;
     }
     if (this.board[index] === null) {
       this.board[index] = this.player1;
-      const winner = this.checkWin(this.board);
-      if (winner) {
-        this.writeWinner(winner);
-        if (winner.winner == 'X')
-          this.xWins++;
-
-        else
-          this.oWins++;
-      } else {
-        this.onMoveAi(this.player1, this.player2);
-      }
     }
+        if (this.isGameOver == false) {
+          this.onMoveAi(this.player1, this.player2);
+        }
+
+    if (winner) {
+      this.writeWinner(winner);
+    }
+    
   }
 
   private onMoveAi(player1, player2) {
-    const index = this.minMax(this.board, 0, player2);
-    this.board[index] = player2;
-    const winner = this.checkWin(this.board);
-    if (winner) {
-      
-      this.writeWinner(winner);
-      if (winner.winner == 'X')
-        this.xWins++;
+    if (this.isGameOver) {
+      return;
+    }
+    else {
+      const index = this.minMax(this.board, 0, player2);
+      this.board[index] = player2;
+      const winner = this.checkWin(this.board);
+      if (winner) {
+        if (winner == 'X')
+          this.xWins++;
 
-      else if(winner.winner == 'O')
-        this.oWins++;
+        else if (winner == 'O')
+          this.oWins++;
 
+      }
     }
   }
 
   minMax(board: string[], depth: number, player: string) {
 
-    if ((depth <= 3 && depth >= -3) || this.BoardSize == 3) {
+    if ((depth <= 3 && depth >= -3) || this.BoardSize == '3') {
       const result = this.checkWin(board);
       if (result) {
-        if (result.winner === this.player1) {
+        if (result === this.player1) {
           return -100 + depth;
-        } else if (result.winner === this.player2) {
+        } else if (result === this.player2) {
           return 100 - depth;
-        } else if (result.winner === 'draw') {
+        } else if (result === 'draw') {
           return 0;
         }
       }
@@ -272,10 +296,10 @@ export class GameBoardComponent implements OnInit {
   }
 
   checkWin(board: string[]) {
-    if (this.BoardSize == 3) {
+    if (this.BoardSize == '3') {
       return this.checkWin3x3(board);
     }
-    else if (this.BoardSize == 4) {
+    else if (this.BoardSize == '4') {
       return this.checkWin4x4(board);
     }
   }
@@ -286,166 +310,165 @@ export class GameBoardComponent implements OnInit {
     //Rows
 
     if (board[0] === board[1] && board[0] === board[2] && board[0]) {
-      return { winner: board[0], cells: [0, 1, 2] };
+      return board[0];
     }
     if (board[3] === board[4] && board[3] === board[5] && board[3]) {
-      return { winner: board[3], cells: [3, 4, 5] };
+      return  board[3];
     }
     if (board[6] === board[7] && board[6] === board[8] && board[6]) {
-      return { winner: board[6], cells: [6, 7, 8] };
+      return board[6];
     }
 
     //Columns
 
     if (board[0] === board[3] && board[0] === board[6] && board[0]) {
-      return { winner: board[0], cells: [0, 3, 6] };
+      return  board[0];
     }
     if (board[1] === board[4] && board[1] === board[7] && board[1]) {
-      return { winner: board[1], cells: [1, 4, 7] };
+      return  board[1];
     }
     if (board[2] === board[5] && board[2] === board[8] && board[2]) {
-      return { winner: board[2], cells: [2, 5, 8] };
+      return  board[2];
     }
 
     //Diagonals
 
     if (board[0] === board[4] && board[0] === board[8] && board[0]) {
-      return { winner: board[0], cells: [0, 4, 8] };
+      return  board[0];
     }
     if (board[2] === board[4] && board[2] === board[6] && board[2]) {
-      return { winner: board[2], cells: [2, 4, 6] };
+      return board[2];
     }
 
     if (board.every(cell => cell !== null)) {
-      return { winner: 'draw' };
+      return  'draw';
     }
-    return false;
+    return null;
   }
 
   checkWin4x4(board: string[]) {
     //Rows
 
     if (board[0] === board[1] && board[0] === board[2]  && board[0] === board[3] && board[0]) {
-      return { winner: board[0], cells: [0, 1, 2, 3] };
+      return  board[0];
     }
 
     if (board[4] === board[5] && board[4] === board[6] && board[4] === board[7] && board[4]) {
-      return { winner: board[4], cells: [4, 5, 6, 7] };
+      return  board[4];
     }
 
     if (board[8] === board[9] && board[8] === board[10] && board[8] === board[11] && board[8]) {
-      return { winner: board[8], cells: [8, 9, 10, 11] };
+      return  board[8];
     }
 
     if (board[12] === board[13] && board[12] === board[14] && board[12] === board[15] && board[12]) {
-      return { winner: board[12], cells: [12, 13, 14, 15] };
+      return  board[12];
     }
 
     //Columns
 
     if (board[0] === board[4] && board[0] === board[8] && board[0] === board[12] && board[0]) {
-      return { winner: board[0], cells: [0, 4, 8, 12] };
+      return  board[0];
     }
 
     if (board[1] === board[5] && board[1] === board[9] && board[1] === board[13] && board[1]) {
-      return { winner: board[1], cells: [1, 5, 8, 13] };
+      return  board[1];
     }
 
     if (board[2] === board[6] && board[2] === board[10] && board[2] === board[14] && board[2]) {
-      return { winner: board[2], cells: [2, 6, 10, 14] };
+      return  board[2];
     }
 
     if (board[3] === board[7] && board[3] === board[11] && board[3] === board[15] && board[3]) {
-      return { winner: board[3], cells: [3, 7, 11, 15] };
+      return  board[3];
     }
 
     //Diagonals
 
     if (board[0] === board[5] && board[0] === board[10] && board[0] === board[15] && board[0]) {
-      return { winner: board[0], cells: [0, 5, 10, 15] };
+      return  board[0];
     }
 
     if (board[3] === board[6] && board[3] === board[9] && board[3] === board[12] && board[3]) {
-      return { winner: board[3], cells: [3, 6, 9, 12] };
+      return  board[3];
     }
 
     //Squares
 
     if (board[0] === board[1] && board[0] === board[4] && board[0] === board[5] && board[0]) {
-      return { winner: board[0], cells: [0, 1, 4, 5] };
+      return  board[0];
     }
 
     if (board[2] === board[3] && board[2] === board[6] && board[2] === board[7] && board[2]) {
-      return { winner: board[2], cells: [2, 3, 6, 7] };
+      return  board[2];
     }
 
     if (board[8] === board[9] && board[8] === board[12] && board[8] === board[13] && board[8]) {
-      return { winner: board[8], cells: [8, 9, 12, 13] };
+      return  board[8];
     }
 
     if (board[10] === board[11] && board[10] === board[14] && board[10] === board[15] && board[10]) {
-      return { winner: board[10], cells: [10, 11, 14, 15] };
+      return  board[10];
     }
 
     if (board[1] === board[2] && board[1] === board[5] && board[1] === board[6] && board[1]) {
-      return { winner: board[1], cells: [1, 2, 5, 6] };
+      return  board[1];
     }
 
     if (board[4] === board[5] && board[4] === board[8] && board[4] === board[9] && board[4]) {
-      return { winner: board[4], cells: [4, 5, 8, 9] };
+      return  board[4];
     }
 
     if (board[9] === board[10] && board[9] === board[13] && board[9] === board[14] && board[9]) {
-      return { winner: board[9], cells: [9, 10, 13, 14] };
+      return  board[9];
     }
 
     if (board[6] === board[7] && board[6] === board[10] && board[6] === board[11] && board[6]) {
-      return { winner: board[6], cells: [6, 7, 10, 11] };
+      return  board[6];
     }
 
     if (board[5] === board[6] && board[5] === board[9] && board[5] === board[10] && board[5]) {
-      return { winner: board[5], cells: [5, 6, 9, 10] };
+      return  board[5];
     }
 
     //Diamonds
 
     if (board[1] === board[4] && board[1] === board[6] && board[1] === board[9] && board[1]) {
-      return { winner: board[1], cells: [1, 4, 6, 9] };
+      return  board[1];
     }
 
     if (board[2] === board[5] && board[2] === board[7] && board[2] === board[10] && board[2]) {
-      return { winner: board[2], cells: [2, 5, 7, 10] };
+      return board[2];
     }
 
     if (board[5] === board[8] && board[5] === board[10] && board[5] === board[13] && board[5]) {
-      return { winner: board[5], cells: [5, 8, 10, 13] };
+      return  board[5];
     }
 
     if (board[6] === board[9] && board[6] === board[11] && board[6] === board[14] && board[6]) {
-      return { winner: board[6], cells: [6, 9, 11, 14] };
+      return board[6];
     }
 
 
     if (board.every(cell => cell !== null)) {
-      return { winner: 'draw' };
+      return  'draw' ;
     }
-    return false;
+    return null;
   }
 
 
 
   writeWinner(winner) {
-    this.isGameOver = true;
-    this.winner = winner;
-    if (winner.winner === 'draw') {
-      this.isTie = true;
-      this.winner.text = 'It is a draw!';
-    } else if (winner.winner === this.player2) {
-      this.winner.text = 'You lost!';
-    } else if (winner.winner === this.player1) {
-      // impossible :)
-      this.winner.text = 'You won!';
+    if (winner == 'X') {
+      this.isGameOver = true;
+      this.winner = 'X';
     }
+    else if (winner == 'O') {
+      this.isGameOver = true;
+      this.winner = 'O';
+    }
+
+    
   }
 
 

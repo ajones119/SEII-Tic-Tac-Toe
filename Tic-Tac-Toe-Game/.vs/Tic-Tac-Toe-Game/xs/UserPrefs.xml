@@ -3,7 +3,8 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Tic-Tac-Toe-Game/ClientApp/src/app/game-board/game-board.component.ts">
     <Files>
       <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/home/home.component.html" Line="20" Column="24" />
-      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/game-board/game-board.component.ts" Line="1" Column="1" />
+      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/game-board/game-board.component.ts" Line="129" Column="8" />
+      <File FileName="Tic-Tac-Toe-Game/ClientApp/src/app/game-board/game-board.component.html" Line="6" Column="22" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,7 +16,7 @@
                   <Node name="app" expanded="True">
                     <Node name="ai-vs-ai" expanded="True" />
                     <Node name="game-board" expanded="True">
-                      <Node name="game-board.component.ts" selected="True" />
+                      <Node name="game-board.component.html" selected="True" />
                     </Node>
                     <Node name="home" expanded="True" />
                     <Node name="local-multiplayer" expanded="True" />

@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 export class AIVsAIComponent implements OnInit {
 
   GameType: string;
-  BoardSize: number;
+  BoardSize: string;
 
   constructor(private _Activatedroute: ActivatedRoute) {
   }

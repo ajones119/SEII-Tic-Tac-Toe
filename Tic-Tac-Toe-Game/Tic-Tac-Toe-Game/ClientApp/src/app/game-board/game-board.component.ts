@@ -28,7 +28,7 @@ export class GameBoardComponent implements OnInit {
   is4x4: boolean;
   isAIvsAI: boolean = false;
 
-  delayTime: number = 2000;//timer delay in milliseconds
+  delayTime: number = 5000;//timer delay in milliseconds
 
 
 

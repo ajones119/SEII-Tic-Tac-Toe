@@ -5,6 +5,7 @@ import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Winner } from '../i-winner';
 
+
 @Component({
   selector: 'app-game-board',
   templateUrl: './game-board.component.html',
@@ -28,7 +29,7 @@ export class GameBoardComponent implements OnInit {
   is4x4: boolean;
   isAIvsAI: boolean = false;
 
-  delayTime: number = 2000;//timer delay in milliseconds
+  delayTime: number = 1000;//timer delay in milliseconds
 
 
 
@@ -134,7 +135,7 @@ export class GameBoardComponent implements OnInit {
           this.onMoveAi(this.player1, this.player2);
         
 
-      //winner = this.checkWin(this.board);
+      winner = this.checkWin(this.board);
 
       if (!this.checkWin(this.board)) {
         await this.delay(this.delayTime);
@@ -163,12 +164,19 @@ export class GameBoardComponent implements OnInit {
       this.board[index] = this.player;
       const winner = this.checkWin(this.board);
       if (winner) {
-        if (winner == 'X')
+        if (winner == 'X'){
           this.xWins++;
-
-        else if (winner == 'O')
+        }
+          
+        else if (winner == 'O'){
           this.oWins++;
 
+        }
+        
+        else if (winner == 'draw') {
+          this.isTie = true;
+        }
+        console.log(winner);
         this.writeWinner(winner);
       }
       this.xIsNext = !this.xIsNext;
@@ -179,6 +187,7 @@ export class GameBoardComponent implements OnInit {
   makeRandomAIMove(board: string[]) {
     //console.log("MakeRandomAIMove start");
     var pass = false;
+    var count = 0;
     if (!this.checkWin(this.board)) {
       while (pass == false) {
         if (this.BoardSize == '3') {
@@ -188,6 +197,15 @@ export class GameBoardComponent implements OnInit {
           var index: number = Math.floor(Math.random() * (15 - 0 + 1)) + 0;
 
         }
+        count++;
+        if(count >30){
+          for(let i = 0; i < 16;i++ ){
+            if(!board[i]){
+              return i;
+            }
+          }
+        }
+        
         //console.log("AI Check Square " + index);
         if (!board[index]) {
           //console.log("finish Check = space available");
@@ -205,7 +223,7 @@ export class GameBoardComponent implements OnInit {
 
   onMoveWithAI(index: number) {
 
-    const winner = this.checkWin(this.board);
+    var winner = this.checkWin(this.board);
     if (winner) {
       this.writeWinner(winner);
     }
@@ -215,6 +233,8 @@ export class GameBoardComponent implements OnInit {
     if (this.board[index] === null) {
       this.board[index] = this.player1;
     }
+    winner = this.checkWin(this.board);
+    this.writeWinner(winner);
         if (this.isGameOver == false) {
           this.onMoveAi(this.player1, this.player2);
         }
@@ -234,11 +254,18 @@ export class GameBoardComponent implements OnInit {
       this.board[index] = player2;
       const winner = this.checkWin(this.board);
       if (winner) {
-        if (winner == 'X')
+        if (winner == 'X'){
           this.xWins++;
-
-        else if (winner == 'O')
+          this.winner = 'X';
+          this.isGameOver = true;
+        }
+          
+        else if (winner == 'O'){
           this.oWins++;
+          this.winner = 'O';
+          this.isGameOver = true;
+        }
+          this.writeWinner(winner);
 
       }
     }
@@ -290,8 +317,7 @@ export class GameBoardComponent implements OnInit {
       }
     }
     else {
-
-      return this.makeRandomAIMove(board);
+      return this.makeRandomAIMove(this.board);
     }
   }
 
@@ -467,17 +493,13 @@ export class GameBoardComponent implements OnInit {
       this.isGameOver = true;
       this.winner = 'O';
     }
+    else if(winner == 'draw'){
+      this.isGameOver = true;
+      this.isTie = true;
+    }
 
     
   }
-
-
-
-
-
-
-
-
 
 
 
